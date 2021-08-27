@@ -9,7 +9,7 @@ body{
     margin: 20px 2px 10px 20px;
     justify-content: center;
     font-family: 'Bungee', cursive;
-    font-size: 25px;
+    font-size: 18px;
     text-align: center;
 }
 .question-header{
@@ -127,5 +127,8 @@ form{
     .game-title{
         font-size: 40px;
         margin-top: 50px;
+    }
+    .question-header{
+        font-size: 25px;
     }
 }

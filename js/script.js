@@ -124,7 +124,7 @@ function questionGetter() {
 function setQuestion() {
     
     setPlayer()
-    $qHeader.text(`Question #${currentQ}. ${currentPlayer.name} you're up!`)
+    $qHeader.text(`Question #${currentQ}: ${currentPlayer.name} you're up!`)
     currentQ++
     playerCounter++
     questionGetter()
