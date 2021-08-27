@@ -6,7 +6,7 @@ qIDArr= [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,]
 let qData, answer, currentPlayer, playerAnswer, qID, currentQ = 1, playerCounter= 1
 const player1 = {name: 'Player 1', score:0}
 const player2 = {name: 'Player 2', score:0}
-
+const $progress = $('.progress-bar')
 const $scoreBoard = $('.scoreboard')
 const $gameContent = $('.game-content')
 const $newQBtn = $('.new-question')
@@ -17,6 +17,7 @@ const $ansA = $('#answer-a')
 const $ansB = $('#answer-b')
 const $ansC = $('#answer-c')
 const $ansD = $('#answer-d')
+const $message = $('.message')
 
 /******************************
  * Functions
@@ -45,17 +46,19 @@ function nameHandler(event) {
     }
 }
 
-
+/*****************************
+ * BOOTUP
+ ****************************/
 
 //When user starts the game, pull in questions & set up the screen
 $startButton.on('click', bootUp);
 function bootUp() {
     handleGetData()
     //Unhide the question #, question and answer, delete start button
-    $qHeader.fadeToggle(100)
-    $gameContent.fadeToggle(100)
+    $qHeader.fadeToggle(200)
+    $gameContent.fadeToggle(200)
+    $newQBtn.toggle(200)
     $startButton.remove()
-    $newQBtn.toggle()
 }
 $newQBtn.on('click', setQuestion)
 
@@ -71,15 +74,13 @@ function handleGetData() {
             setQuestion()
         }
     )
-   //console.log(this.className.includes('-a'))
+ 
 }
 $('.answers').on('click', processAnswer)
 function processAnswer(event) {
     playerAnswer = event.target.id
     $(".ans").prop("disabled", true);
     checkAnswer()
-    //console.log('playerAnswer:', playerAnswer)
-
 }
 
 //render function ***HOISTED
@@ -98,9 +99,10 @@ function checkAnswer() {
     if (playerAnswer === answer) {
         //console.log('correct! point for player 1')
         plus1();
+        $message.text('You got it, wow!').css('color', 'black')
 
     } else {
-        //console.group('incorrect!')
+        $message.text('No, sorry that is way off!').css('color', 'red')
     }
     if (qIDArr.length) {
         $newQBtn.prop('disabled', false)
@@ -122,9 +124,15 @@ function questionGetter() {
     //solving a bug where qID would = 20 about once per game... not sure why
 }
 function setQuestion() {
-    
+    $message.text("")
     setPlayer()
     $qHeader.text(`Question #${currentQ}: ${currentPlayer.name} you're up!`)
+    console.log('`${currentQ / 20 * 100}%;`:', `${currentQ / 20 * 100}%;`)
+    $progress
+        .text(`${currentQ}/20`)
+        .attr('aria-valuenow', currentQ)
+        .width(`${currentQ / 20 * 100}%`)
+    
     currentQ++
     playerCounter++
     questionGetter()

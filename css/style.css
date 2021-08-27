@@ -18,8 +18,9 @@ body{
     font-weight: bold;
 }
 .progress{
-    display: none;
     margin:10px 25px;
+    font-size: medium;
+    font-weight: bold;
 }
 form{
     margin: 10px 30px;
@@ -27,6 +28,10 @@ form{
 }
 .game-content{
     display: none;
+}
+.message{
+    font-size: medium;
+    font-weight: bold;
 }
 .new-question{
     display: none;
@@ -133,3 +138,4 @@ form{
     .question-header{
         font-size: 35px;
     }
+}
