@@ -2,11 +2,11 @@
  * Variables
  *****************************/
 
-qIDArr= [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]
-let qData, answer, currentPlayer, playerAnswer, qID
+qIDArr= [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,]
+let qData, answer, currentPlayer, playerAnswer, qID, currentQ = 1, playerCounter= 1
 const player1 = {name: 'Player 1', score:0}
 const player2 = {name: 'Player 2', score:0}
-currentPlayer = player1
+
 const $scoreBoard = $('.scoreboard')
 const $gameContent = $('.game-content')
 const $newQBtn = $('.new-question')
@@ -76,8 +76,9 @@ function handleGetData() {
 $('.answers').on('click', processAnswer)
 function processAnswer(event) {
     playerAnswer = event.target.id
+    $(".ans").prop("disabled", true);
     checkAnswer()
-    console.log('playerAnswer:', playerAnswer)
+    //console.log('playerAnswer:', playerAnswer)
 
 }
 
@@ -93,33 +94,67 @@ function render(num) {
 }
 //check the answer clicked against the correct answer
 function checkAnswer() {
-    console.log("player answer: ",playerAnswer,"correct answer: ", answer)
+    //console.log("player answer: ",playerAnswer,"correct answer: ", answer)
     if (playerAnswer === answer) {
-        console.log('correct! point for player 1')
-        player1.score += 1
-        $('.player1-score').text(player1.score)
-    } else {
-        console.group('incorrect!')
-    }
-    $newQBtn.fadeToggle()
-}
+        //console.log('correct! point for player 1')
+        plus1();
 
-function questionGetter() {
-    qID = qIDArr.splice(Math.floor(Math.random()*qIDArr.length),1)
-}
-function setQuestion() {
-    questionGetter()
-    console.log('qID:', qID)
-    console.log('qIDArr.length:', qIDArr.length)
-    render(qID)
-    console.log(qIDArr.length)
+    } else {
+        //console.group('incorrect!')
+    }
     if (qIDArr.length) {
-        $newQBtn.fadeToggle(100)
+        $newQBtn.prop('disabled', false)
     } else {
         $newQBtn
             .text('The game is over!')
             .removeClass('btn-primary start')
             .addClass('btn-danger')
+            .prop('disabled', true)
 
     }
+    
+}
+
+function questionGetter() {
+    //gets random question to pass into render function and 
+    //removes it from the question array
+    qID = qIDArr.splice(Math.floor(Math.random() * qIDArr.length), 1)
+    //solving a bug where qID would = 20 about once per game... not sure why
+}
+function setQuestion() {
+    
+    setPlayer()
+    $qHeader.text(`Question #${currentQ}. ${currentPlayer.name} you're up!`)
+    currentQ++
+    playerCounter++
+    questionGetter()
+    $(".ans").prop("disabled", false);
+    console.log('qID:', qID)
+    console.log('qIDArr.length:', qIDArr.length)
+    render(qID)
+    console.log(qIDArr.length)
+    if (qIDArr.length) {
+        $newQBtn.prop('disabled', true)
+    } 
+}
+//determine's the current player
+function setPlayer() {
+    if (playerCounter % 2) {
+        currentPlayer = player1
+    } else {
+        currentPlayer = player2
+    }
+}
+
+function plus1() {
+    if (currentPlayer === player1) {
+        console.log('player1')
+        $('.p1Plus').fadeTo(200, 1).delay(200).fadeTo(200, 0)
+    } else {
+        console.log('player2')
+        $('.p2Plus').fadeTo(200, 1).delay(200).fadeTo(200, 0)
+    }
+    currentPlayer.score++
+    $('.player1-score').text(player1.score)
+    $('.player2-score').text(player2.score)
 }
