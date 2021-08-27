@@ -1,15 +1,11 @@
-/*variable setup here. Will need containers for:
-$scoreBoard = $('scoreBoard') scoreboard div contains divs for player names and player scores
-$question
-*/
+/******************************
+ * Variables
+ *****************************/
 
 qIDArr= [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]
 let qData, answer, currentPlayer, playerAnswer, qID
 const player1 = {name: 'Player 1', score:0}
 const player2 = {name: 'Player 2', score:0}
-
-//player2{name, score}
-//determine the current player
 currentPlayer = player1
 const $scoreBoard = $('.scoreboard')
 const $gameContent = $('.game-content')
@@ -22,46 +18,43 @@ const $ansB = $('#answer-b')
 const $ansC = $('#answer-c')
 const $ansD = $('#answer-d')
 
+/******************************
+ * Functions
+ *****************************/
 
-    /*functions/functionality
-    handleGetData (
-        AJAX-pull in next question from source 
-    )
-    scoreUpdater(
-        check chosen answer against correct answer
-        correct? score += pointValue : score -= pointValue
-    )
-    */
-
+//When player submits their name, assign it to the player object
 $('form').submit(nameHandler)
 function nameHandler(event) {
     event.preventDefault()
     p1Name = $("input[id ='p1-name']").val()
     p2Name = $("input[id ='p2-name']").val()
     if (p1Name && p2Name) {
-        console.log('hello')
         player1.name = p1Name
         player2.name = p2Name
-        console.log('player1:', player1)
+        //update the score-board with the player's name
         $('.player1-name').text(player1.name)
         $('.player2-name').text(player2.name)
-        $scoreBoard.fadeToggle(100)
+        //Unhide the scoreboard and hide the input
+        $startButton.fadeIn()
+        $scoreBoard.fadeTo(100,100)
         $('form').fadeToggle(100)
+        
     } else {
+        //makes sure both players have entered their names
         alert("C'mon, give me both your names")
     }
 }
 
 
 
-//add event listener for when user clicks an answer
-$startButton.on('click', bootUp)
+//When user starts the game, pull in questions & set up the screen
+$startButton.on('click', bootUp);
 function bootUp() {
     handleGetData()
+    //Unhide the question #, question and answer, delete start button
     $qHeader.fadeToggle(100)
     $gameContent.fadeToggle(100)
     $startButton.remove()
-    $('.getter').fadeToggle(100)
     $newQBtn.toggle()
 }
 $newQBtn.on('click', setQuestion)

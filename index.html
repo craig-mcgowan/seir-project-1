@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <!-- JavaScript Bundle with Popper -->
+    <link href="https://fonts.googleapis.com/css2?family=Bungee&family=Press+Start+2P&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous">
     </script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -16,42 +16,63 @@
     
 </head>
 <body>
+<!-- Game title-->
     <h1 class="game-title">So you think you can Win a Million Dollars</h1>
-    <h2 class="question-header">Question 1</h2>
 
+
+<!-- Progress Bar  -->
     <div class="progress">
     <div class="progress-bar" role="progressbar" style="width: 5%;" aria-valuenow="1" aria-valuemin="0" aria-valuemax="20">1/20</div>
     </div>
-<form action = ''>
-  <div class="form-group">
-    <input type="text" class="form-control" id="p1-name" aria-describedby="emailHelp" placeholder="Player 1 Name">
-  </div>
-  <div class="form-group">
-     <input type="text" class="form-control" id="p2-name" placeholder="Player 2 Name">
-  </div>
-  <button type="submit" class="btn btn-primary">Submit</button>
-</form>
-    
+
+<!-- Player Name input -->
+    <form action = ''>
+    <div class="form-group">
+    <input type="text" class="form-control" id="p1-name" placeholder="Player 1 Name">
+    </div>
+    <div class="form-group">
+    <input type="text" class="form-control" id="p2-name" placeholder="Player 2 Name">
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+
+<!-- Question And Answers -->
+
+<!--QUESTION -->
+    <div class="text-center">
+    <h2 class="question-header">Question 1</h2>
+
+  
     <div class="game-content">
-        <div class="question">Will the question go here??</div>
-        <div class="answers">
-            <button class="btn btn-outline-secondary btn-block ans" id="answer-a">this is answer a</button>
-            <button class="btn btn-outline-secondary btn-block ans" id="answer-b">this is answer b</button>
-            <button class="btn btn-outline-secondary btn-block ans" id="answer-c">this is answer c</button>
-            <button class="btn btn-outline-secondary btn-block ans" id="answer-d">this is answer d</button>
-        </div>
-    </div>    
-    <button type="button" class="btn btn-primary start">Start the Game!</button>
+    <div class="question">Will the question go here??</div>
+<!-- ANSWERS -->
+    <div class="answers">
+        <button class="btn btn-info ans" id="answer-a">this is answer a</button>
+        <button class="btn btn-info ans" id="answer-b">this is answer b</button>
+        <button class="btn btn-info ans" id="answer-c">this is answer c</button>
+        <button class="btn btn-info ans" id="answer-d">this is answer d</button>
+    </div>
+    </div>  
+    </div>
+  
+
+<!--Start Game Button  -->
+   <div class = 'text-center'>
+    <button type="button" class="btn btn-success start">Start the Game!</button>
+    </div>
+<!-- Next Question Button -->
     <button type="button" class="btn btn-primary new-question">Next Question</button>
+    
+<!-- Score Board -->
     <div class="scoreboard">
-        <div class="player-names">
-            <div class="player1-name">Player1</div>
-            <div class="player2-name">Player2</div>
-        </div>
-        <div class="scores">
-            <div class="player1-score">0</div>
-            <div class="player2-score">0</div>
-        </div>
+    <div class="player-names">
+        <div class="player1-name">Player1</div>
+        <div class="player2-name">Player2</div>
+    </div>
+    <div class="scores">
+        <div class="player1-score">0</div>
+        <div class="player2-score">0</div>
+    </div>
     </div>
 </body>
 </html>

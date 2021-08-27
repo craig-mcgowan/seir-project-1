@@ -1,20 +1,98 @@
+body{
+    margin: 10px 30px;
+    font-size: small;
+    background-color:aliceblue;
+    justify-content: center;
+}
+.game-title{
+    display: flex;
+    margin: 50px 2px 30px 20px;
+    justify-content: center;
+    font-family: 'Bungee', cursive;
+    font-size: 35px;
+    text-align: center;
+}
 .question-header{
     display: none
 }
 .progress{
+    display: none;
     margin:10px 25px;
 }
+form{
+    margin: 10px 30px;
+    
+}
 .game-content{
-    display: none
+    display: none;
 }
 .new-question{
-    display: none
+    display: none;
+    margin-top: 20px
 }
 
 .scoreboard{
-   display: none
+    margin: 20px auto;
+    font-family: 'Press Start 2P', cursive;
+    opacity: 0;
+    display: grid;
+    width: 80%;
+    text-align: center;
+    border-width: 1px;
+    border-style: solid;
+    grid-template-areas:
+    "one two"
+    "three four";
+    grid-template-columns: 3fr 1fr;
+}
+.player-names{
+    border-style: solid;
+    border-width: 2px;
+
+}
+.scores{
+    border-style: solid;
+    border-width: 2px;
+
+}
+.player1-name{
+    grid-area: one;
+    border-width: 2px;
+    border-style: solid;
+}
+.player2-name{
+    grid-area: three;
+    border-style: solid;
+    border-width: 2px;
+}
+.player1-score{
+    border-style: solid;
+    border-width: 2px;
+    grid-area: two;
+}
+.player2-score{
+    border-style: solid;
+    border-width: 2px;
+    grid-area: four;
 }
 .ans{
     font-size: smaller;
+    word-wrap: normal;
+    width: 300px;
+    white-space:normal;
+    margin: 5px
 }
+.start{
+    display:none;
+    margin: 10px auto;
+    
+}
+@media(min-width: 481px) {
+    form{margin: 10px 30%}
+    .progress{margin: 10px 30%}
+    .scoreboard{width: 400px}
+    .game-content{
+        width: 700px;
+        margin:0 auto}
 
+}
