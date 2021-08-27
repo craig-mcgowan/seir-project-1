@@ -6,10 +6,10 @@ body{
 }
 .game-title{
     display: flex;
-    margin: 50px 2px 10px 20px;
+    margin: 20px 2px 10px 20px;
     justify-content: center;
     font-family: 'Bungee', cursive;
-    font-size: 35px;
+    font-size: 25px;
     text-align: center;
 }
 .question-header{
@@ -124,4 +124,8 @@ form{
         width: 900px;
         margin:0 auto}
     .ans{width:400px}
+    .game-title{
+        font-size: 40px;
+        margin-top: 50px;
+    }
 }
