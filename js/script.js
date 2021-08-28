@@ -36,13 +36,22 @@ function toggleAudio() {
 function playAudio(audioSource) {
     
 }
+
+/**************************************************
+ * SUBMIT BUTTON/NAME HANDLER
+ */
 //When player submits their name, assign it to the player object
 $('form').submit(nameHandler)
 function nameHandler(event) {
     event.preventDefault()
     p1Name = $("input[id ='p1-name']").val()
     p2Name = $("input[id ='p2-name']").val()
-    if (p1Name && p2Name) {
+    if (!p1Name || !p2Name) {
+        //makes sure both players have entered their names
+        alert("C'mon, give me both your names")
+    } else if (p1Name.length > 10 || p2Name.length > 10) {
+        alert("Your name is too long! How about a nickname?")  
+    } else {
         player1.name = p1Name
         player2.name = p2Name
         //update the score-board with the player's name
@@ -53,9 +62,8 @@ function nameHandler(event) {
         $scoreBoard.fadeTo(100,100)
         $('form').fadeToggle(100)
         $('audio#background-music')[0].play()
-    } else {
-        //makes sure both players have entered their names
-        alert("C'mon, give me both your names")
+        $('.game-instructions').fadeTo(100,100)
+
     }
 }
 
