@@ -2,7 +2,7 @@
  * Variables
  *****************************/
 
-qIDArr= [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,]
+qIDArr= [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19]
 let qData, answer, currentPlayer, playerAnswer, qID, currentQ = 1, playerCounter= 1
 const player1 = {name: 'Player 1', score:0}
 const player2 = {name: 'Player 2', score:0}
@@ -18,11 +18,24 @@ const $ansB = $('#answer-b')
 const $ansC = $('#answer-c')
 const $ansD = $('#answer-d')
 const $message = $('.message')
+const $muteButton= $('#mute')
 
 /******************************
  * Functions
  *****************************/
+/******************************
+ * AUDIO
+ *****************************/
 
+$muteButton.click(toggleAudio)
+function toggleAudio() {
+    $('.mute').toggle();
+    $('.unmute').toggle();
+}
+
+function playAudio(audioSource) {
+    
+}
 //When player submits their name, assign it to the player object
 $('form').submit(nameHandler)
 function nameHandler(event) {
@@ -39,7 +52,7 @@ function nameHandler(event) {
         $startButton.fadeIn()
         $scoreBoard.fadeTo(100,100)
         $('form').fadeToggle(100)
-        
+        $('audio#background-music')[0].play()
     } else {
         //makes sure both players have entered their names
         alert("C'mon, give me both your names")
@@ -59,9 +72,8 @@ function bootUp() {
     $gameContent.fadeToggle(200)
     $newQBtn.toggle(200)
     $startButton.remove()
+    
 }
-$newQBtn.on('click', setQuestion)
-
 //build handleGetData function to pull in information
 function handleGetData() {
     //build AJAX function to pull in API data
@@ -74,55 +86,17 @@ function handleGetData() {
             setQuestion()
         }
     )
- 
-}
-$('.answers').on('click', processAnswer)
-function processAnswer(event) {
-    playerAnswer = event.target.id
-    $(".ans").prop("disabled", true);
-    checkAnswer()
 }
 
-//render function ***HOISTED
-function render(num) {
-    $question.text(qData.items[num].fields.question)
-    $ansA.text(qData.items[num].fields.a)
-    $ansB.text(qData.items[num].fields.b)
-    $ansC.text(qData.items[num].fields.c)
-    $ansD.text(qData.items[num].fields.d)
-    answer = `answer-${qData.items[num].fields.answer}`
+/*****************************
+ * Next Question Event Handler
+ * Set Question
+ * Render
+ ****************************/
 
-}
-//check the answer clicked against the correct answer
-function checkAnswer() {
-    //console.log("player answer: ",playerAnswer,"correct answer: ", answer)
-    if (playerAnswer === answer) {
-        //console.log('correct! point for player 1')
-        plus1();
-        $message.text('You got it, wow!').css('color', 'black')
+$newQBtn.on('click', setQuestion)
 
-    } else {
-        $message.text('No, sorry that is way off!').css('color', 'red')
-    }
-    if (qIDArr.length) {
-        $newQBtn.prop('disabled', false)
-    } else {
-        $newQBtn
-            .text('The game is over!')
-            .removeClass('btn-primary start')
-            .addClass('btn-danger')
-            .prop('disabled', true)
 
-    }
-    
-}
-
-function questionGetter() {
-    //gets random question to pass into render function and 
-    //removes it from the question array
-    qID = qIDArr.splice(Math.floor(Math.random() * qIDArr.length), 1)
-    //solving a bug where qID would = 20 about once per game... not sure why
-}
 function setQuestion() {
     $message.text("")
     setPlayer()
@@ -132,7 +106,6 @@ function setQuestion() {
         .text(`${currentQ}/20`)
         .attr('aria-valuenow', currentQ)
         .width(`${currentQ / 20 * 100}%`)
-    
     currentQ++
     playerCounter++
     questionGetter()
@@ -145,6 +118,58 @@ function setQuestion() {
         $newQBtn.prop('disabled', true)
     } 
 }
+//render function ***HOISTED
+function render(num) {
+    $question.text(qData.items[num].fields.question)
+    $ansA.text(qData.items[num].fields.a)
+    $ansB.text(qData.items[num].fields.b)
+    $ansC.text(qData.items[num].fields.c)
+    $ansD.text(qData.items[num].fields.d)
+    answer = `answer-${qData.items[num].fields.answer}`
+
+}
+/*************************************
+ *  Answer Event Listener
+ *  Check Answer Function
+ ************************************/
+$('.answers').on('click', processAnswer)
+function processAnswer(event) {
+    playerAnswer = event.target.id
+    $(".ans").prop("disabled", true);
+    checkAnswer()
+}
+//check the answer clicked against the correct answer
+function checkAnswer() {
+    if (playerAnswer === answer) {
+        plus1();
+        $message.text('You got it, wow!').css('color', 'black')
+        //playAudio(correctAnswer)
+    } else {
+        $message.text('No, sorry that is way off!').css('color', 'red')
+        //playAudio(wrongAnswer)
+    }
+    if (qIDArr.length) {
+        console.log('hey craig')
+        $newQBtn.prop('disabled', false)
+    } else {
+        $newQBtn
+            .text('The game is over!')
+            .removeClass('btn-primary start')
+            .addClass('btn-danger')
+            .prop('disabled', true)
+    }
+}
+
+
+
+
+function questionGetter() {
+    //gets random question to pass into render function and 
+    //removes it from the question array
+    qID = qIDArr.splice(Math.floor(Math.random() * qIDArr.length), 1)
+    //solving a bug where qID would = 20 about once per game... not sure why
+}
+
 //determine's the current player
 function setPlayer() {
     if (playerCounter % 2) {

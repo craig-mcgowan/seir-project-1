@@ -16,9 +16,23 @@
     
 </head>
 <body>
-<!-- Game title-->
-    <h1 class="game-title">So you think you can Win a Million Dollars</h1>
 
+<div class="head-container">
+<!--AUDIO BUTTON  -->
+    <input type="checkbox" name="mute" id="mute">
+    <label for="mute" class="mute">
+        <img src="./audio/icons/Speaker_Icon.svg" alt="mute_icon.svg" title="Mute Icon"> 
+    </label>
+    <label for="mute" class="unmute" 
+    style="display: none">
+        <img src="./audio/icons/Mute_Icon.svg" alt="speaker_icon.svg" title="Speaker Icon">
+    </label>
+    <h1 class="game-title">So you think you can Win a Million Dollars</h1>
+</div>
+    
+
+<!-- Game title-->
+    
 
 <!-- Progress Bar  -->
     <div class="progress">
@@ -79,5 +93,15 @@
         <div class="p2Plus">+1</div>
     </div>
     </div>
+
+<!-- AUDIO -->
+    <audio id="background-music" v>
+        <source src="./audio/background-music/main-theme.mp3">
+        <source>
+    </audio>
+    
+    <audio id="sound-effects" src="">
+
+
 </body>
 </html>

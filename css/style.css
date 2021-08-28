@@ -1,16 +1,40 @@
 body{
-    margin: 10px 30px;
+    margin: 10px 10px;
     font-size: small;
     background-color:aliceblue;
     justify-content: center;
 }
-.game-title{
+.head-container{
     display: flex;
-    margin: 20px 2px 10px 20px;
-    justify-content: center;
+    justify-content: space-between;
+    border-style: dotted;
+}
+input#mute {
+  display: none;
+  
+  
+}
+.mute img {
+  display: flex;
+  height:2em;
+  margin-top: 40px;
+  /* Used a tool from one of the responses to this question to change the color of the svg image
+  https://stackoverflow.com/questions/22252472/how-to-change-the-color-of-an-svg-element*/
+  filter: invert(29%) sepia(32%) saturate(7%) hue-rotate(321deg) brightness(94%) contrast(86%);
+}
+.unmute img {
+  display: flex;
+  height: 2em;
+  margin-top: 40px;
+  /* see comment in mute image css*/
+  filter: invert(29%) sepia(32%) saturate(7%) hue-rotate(321deg) brightness(94%) contrast(86%);
+}
+.game-title{
+    margin: 10px 10px 10px 10px;
     font-family: 'Bungee', cursive;
     font-size: 25px;
-    text-align: center;
+    text-align: left;
+    order: -1;
 }
 .question-header{
     display: none;
@@ -122,20 +146,48 @@ form{
     margin: 10px auto;
     
 }
+
+
 @media(min-width: 481px) {
     form{margin: 10px 30%}
-    .progress{margin: 10px 30%}
+    .progress{margin: 10px 20%}
     .scoreboard{width: 400px}
     .game-content{
         font-size:18px;
-        width: 900px;
-        margin:0 auto}
-    .ans{width:400px}
+        margin:0 20%}
+    .answers{
+        display: grid;
+        grid-template-columns: 50% 50%;
+        grid-template-areas: 
+            'a b'
+            'c d';
+        border: dotted;
+    }
+    #answer-a{
+        grid-area: a;
+        border-style: solid;
+    }    
+    #answer-b{
+        grid-area: b
+    }    
+    #answer-c{
+        grid-area: c
+    }
+    #answer-d{
+        grid-area: d
+    }
+    .ans{
+        margin-top:5px;
+        width:auto
+    }
     .game-title{
         font-size: 40px;
         margin-top: 50px;
     }
     .question-header{
         font-size: 35px;
+    }
+    .head-container{
+        margin: 0 20%;
     }
 }
