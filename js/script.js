@@ -142,9 +142,14 @@ function render(num) {
  ************************************/
 $('.answers').on('click', processAnswer)
 function processAnswer(event) {
-    playerAnswer = event.target
-    $(".ans").prop("disabled", true);
-    checkAnswer()
+    console.log(event.target)
+    if (event.target.className === 'answers') {
+
+    } else {
+        playerAnswer = event.target
+        $(".ans").prop("disabled", true);
+        checkAnswer()
+    }
 }
 //check the answer clicked against the correct answer
 function checkAnswer() {
