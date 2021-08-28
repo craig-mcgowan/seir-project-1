@@ -155,7 +155,7 @@ form{
         grid-template-areas: 
             'a b'
             'c d';
-        border: dotted;
+        
     }
     #answer-a{
         grid-area: a;
@@ -192,6 +192,9 @@ form{
         font-size: 3em;
         margin: 10px 30%;
  
+    }
+    .message{
+        font-size: 3em;
     }
     .start{
         font-size: 3em;

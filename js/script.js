@@ -80,7 +80,7 @@ function bootUp() {
     $gameContent.fadeToggle(200)
     $newQBtn.toggle(200)
     $startButton.remove()
-    
+    $('.game-instructions').remove()
 }
 //build handleGetData function to pull in information
 function handleGetData() {
@@ -117,7 +117,7 @@ function setQuestion() {
     currentQ++
     playerCounter++
     questionGetter()
-    $(".ans").prop("disabled", false);
+    $(".ans").prop("disabled", false).removeClass().addClass('btn btn-info ans');
     console.log('qID:', qID)
     console.log('qIDArr.length:', qIDArr.length)
     render(qID)
@@ -142,19 +142,21 @@ function render(num) {
  ************************************/
 $('.answers').on('click', processAnswer)
 function processAnswer(event) {
-    playerAnswer = event.target.id
+    playerAnswer = event.target
     $(".ans").prop("disabled", true);
     checkAnswer()
 }
 //check the answer clicked against the correct answer
 function checkAnswer() {
-    if (playerAnswer === answer) {
+    console.log(playerAnswer)
+    if (playerAnswer.id === answer) {
         plus1();
         $message.text('You got it, wow!').css('color', 'black')
         //playAudio(correctAnswer)
     } else {
         $message.text('No, sorry that is way off!').css('color', 'red')
         //playAudio(wrongAnswer)
+        playerAnswer.setAttribute('class', 'btn btn-danger ans')
     }
     if (qIDArr.length) {
         console.log('hey craig')
