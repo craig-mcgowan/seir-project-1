@@ -18,7 +18,16 @@ const $ansB = $('#answer-b')
 const $ansC = $('#answer-c')
 const $ansD = $('#answer-d')
 const $message = $('.message')
-const $muteButton= $('#mute')
+const $muteButton = $('#mute')
+const audioTracks = {
+    letsPlayAudio: "./audio/background-music/lets-play.mp3",
+    questionAudio: "./audio/background-music/100-1000-music.mp3",
+    mainTheme: "./audio/background-music/main-theme.mp3",
+    correctAudio: "./audio/correct-answer/correct-answer.mp3",
+    wrongAnswer: ["./audio/wrong-answer/boing.mp3", "./audio/wrong-answer/buzzer.mp3", "./audio/wrong-answer/stinky.mp3"]
+}
+const $backgroundMusic = $('audio#background-music')
+const $soundEffects = $('audio#sound-effects')
 
 /******************************
  * Functions
@@ -31,15 +40,36 @@ $muteButton.click(toggleAudio)
 function toggleAudio() {
     $('.mute').toggle();
     $('.unmute').toggle();
+    console.log($('.mute').css('display'))
+    volumeChecker($backgroundMusic)
 }
 
-function playAudio(audioSource) {
-    
+function volumeChecker($audioSource) {
+    if ($('.mute').css('display')=== 'none') {
+        $audioSource.prop('volume', 0)
+    } else {
+        $audioSource.prop('volume', 0.05)
+    }
+}
+function playSoundEffect(soundEffect) {
+    volumeChecker($soundEffects)
+    $soundEffects.attr('src', soundEffect)
+    $soundEffects[0].play()
+}
+function playBackgroundMusic(backgroundMusic) {
+    volumeChecker($backgroundMusic)
+    $backgroundMusic.attr('src', backgroundMusic)
+    $backgroundMusic[0].play()
+}
+
+function pauseAudio($audioSource) {
+    $audioSource[0].pause()
 }
 
 /**************************************************
  * SUBMIT BUTTON/NAME HANDLER
- */
+ ************************************************/
+
 //When player submits their name, assign it to the player object
 $('form').submit(nameHandler)
 function nameHandler(event) {
@@ -61,7 +91,7 @@ function nameHandler(event) {
         $startButton.fadeIn()
         $scoreBoard.fadeTo(100,100)
         $('form').fadeToggle(100)
-        $('audio#background-music')[0].play()
+        playBackgroundMusic(audioTracks.mainTheme)
         $('.game-instructions').fadeTo(100,100)
 
     }
@@ -81,6 +111,11 @@ function bootUp() {
     $newQBtn.toggle(200)
     $startButton.remove()
     $('.game-instructions').remove()
+    //pauseAudio($backgroundMusic)
+    playBackgroundMusic(audioTracks.questionAudio)
+    playSoundEffect(audioTracks.letsPlayAudio)
+    
+    //setTimeout(playAudio($backgroundMusic), 1000000000)
 }
 //build handleGetData function to pull in information
 function handleGetData() {
@@ -154,17 +189,17 @@ function processAnswer(event) {
 //check the answer clicked against the correct answer
 function checkAnswer() {
     console.log(playerAnswer)
-    if (playerAnswer.id === answer) {
+    if (playerAnswer.id === answer || answer === 'answer-any') {
         plus1();
         $message.text('You got it, wow!').css('color', 'black')
-        //playAudio(correctAnswer)
+        playerAnswer.setAttribute('class', 'btn btn-success ans')
+        playSoundEffect(audioTracks.correctAudio)
     } else {
         $message.text('No, sorry that is way off!').css('color', 'red')
-        //playAudio(wrongAnswer)
         playerAnswer.setAttribute('class', 'btn btn-danger ans')
+        playSoundEffect(audioTracks.wrongAnswer[Math.floor(Math.random()*audioTracks.wrongAnswer.length)])
     }
     if (qIDArr.length) {
-        console.log('hey craig')
         $newQBtn.prop('disabled', false)
     } else {
         $newQBtn
