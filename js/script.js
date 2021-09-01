@@ -3,8 +3,9 @@
  *****************************/
 
 qIDArr= [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19]
-let qData, answer, currentPlayer, playerAnswer, qID, currentQ = 1, playerCounter= 1
-const player1 = {name: 'Player 1', score:0}
+let qData, answer , currentPlayer, playerAnswer, qID, currentQ = 1, playerCounter= 1
+let questionSet = 'triviaQuestions'
+const player1 = { name: 'Player 1', score: 0 }
 const player2 = {name: 'Player 2', score:0}
 const $progress = $('.progress-bar')
 const $scoreBoard = $('.scoreboard')
@@ -81,9 +82,15 @@ function nameHandler(event) {
         alert("C'mon, give me both your names")
     } else if (p1Name.length > 10 || p2Name.length > 10) {
         alert("Your name is too long! How about a nickname?")  
-    } else {
+    } else  {
         player1.name = p1Name
         player2.name = p2Name
+        if (p1Name.toLowerCase() === 'uuddlrlrba' || p2Name.toLowerCase() === 'uuddlrlrba') {
+            player1.name = "Easter"
+            player2.name = "Egg"
+        } else if(p1Name === 'stupid' || p2Name === 'questions'){
+        questionSet = 'triviaq'
+        }   
         //update the score-board with the player's name
         $('.player1-name').text(player1.name)
         $('.player2-name').text(player2.name)
@@ -121,7 +128,7 @@ function bootUp() {
 function handleGetData() {
     //build AJAX function to pull in API data
     $.ajax({
-        url:  `https://cdn.contentful.com//spaces/a9aj5bcg0qv1/environments/master/entries/?access_token=ySz5GlMWosH6hOorHoM5m1_luBoP3p-QC6w08NpnBAY&select=fields`
+        url:  `https://cdn.contentful.com//spaces/a9aj5bcg0qv1/environments/master/entries/?access_token=ySz5GlMWosH6hOorHoM5m1_luBoP3p-QC6w08NpnBAY&select=fields&content_type=${questionSet}`
     }).then(
         function (data) {
             //console.log(data)

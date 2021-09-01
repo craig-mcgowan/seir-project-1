@@ -1,7 +1,12 @@
+html{
+    height: 100%
+}
 body{
     margin: 10px 10px;
     font-size: small;
-    background-color:aliceblue;
+    background-image: linear-gradient( rgb(208, 229, 247),rgb(34, 135, 224)) ;
+    background-size: cover;
+    background-repeat: no-repeat;
     justify-content: center;
 }
 .head-container{
@@ -10,7 +15,6 @@ body{
 }
 input#mute {
   display: none;
-  
   
 }
 .mute img {
@@ -44,6 +48,10 @@ input#mute {
     margin:10px 25px;
     font-size: medium;
     font-weight: bold;
+    color: black;
+    -webkit-text-fill-color: white; 
+    -webkit-text-stroke-width: .5px;
+    -webkit-text-stroke-color: black;
 }
 form{
     margin: 10px 30px;
@@ -52,6 +60,9 @@ form{
 .game-content{
     display: none;
     text-align: justify;
+}
+.question{
+    margin-bottom: 20px;
 }
 .message{
     font-size: medium;
@@ -73,7 +84,12 @@ form{
     grid-template-areas: 
     "spacer p1name p1score p1plus"
     "spacer p2name p2score p2plus";
+
 }
+.player-names, .scores {
+    background-color:snow;
+}
+
 .player1-name{
     grid-area: p1name;
     border-width: 3px;
@@ -123,9 +139,9 @@ form{
 .ans{
     font-size: smaller;
     word-wrap: normal;
-    width: 300px;
+    width: 90%;
     white-space:normal;
-    margin: 5px;
+    margin: 5px 5%;
     font-weight: bolder;
 }
 .game-instructions{
