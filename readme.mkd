@@ -1,0 +1,13 @@
+# PROJECT 1 - TRIVIA GAME USING AJAX REQUEST
+
+**Link to the deployed game here:** <https://seir-project-1-trivia-game-craig-mcgowan.vercel.app/>
+
+This trivia game is intended to be a fun way to practice building and deploying
+an interactive website and using an AJAX request to connect to an API.
+
+It's also got fun computer science trivia for beginners, as well as a few easter eggs just so I could get extra practice coding.
+
+I used bootstrap for the styling on the buttons and progress bar and google fonts for the header and scoreboard.
+
+Would love to add some lifelines, the option to play single player and a start over button in the future.
+

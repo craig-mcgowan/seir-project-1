@@ -38,13 +38,14 @@ const $soundEffects = $('audio#sound-effects')
  *****************************/
 
 $muteButton.click(toggleAudio)
+//changes the icon for the mute button
 function toggleAudio() {
     $('.mute').toggle();
     $('.unmute').toggle();
     console.log($('.mute').css('display'))
     volumeChecker($backgroundMusic)
 }
-
+//based on the icon being shown, turns the volume on or off
 function volumeChecker($audioSource) {
     if ($('.mute').css('display')=== 'none') {
         $audioSource.prop('volume', 0)
@@ -52,20 +53,19 @@ function volumeChecker($audioSource) {
         $audioSource.prop('volume', 0.05)
     }
 }
+//plays a sound effect when a button is pressed
 function playSoundEffect(soundEffect) {
     volumeChecker($soundEffects)
     $soundEffects.attr('src', soundEffect)
     $soundEffects[0].play()
 }
+//plays the background music
 function playBackgroundMusic(backgroundMusic) {
     volumeChecker($backgroundMusic)
     $backgroundMusic.attr('src', backgroundMusic)
     $backgroundMusic[0].play()
 }
 
-function pauseAudio($audioSource) {
-    $audioSource[0].pause()
-}
 
 /**************************************************
  * SUBMIT BUTTON/NAME HANDLER
@@ -81,15 +81,18 @@ function nameHandler(event) {
         //makes sure both players have entered their names
         alert("C'mon, give me both your names")
     } else if (p1Name.length > 10 || p2Name.length > 10) {
+        //for formatting purposes don't want names to be too long
         alert("Your name is too long! How about a nickname?")  
     } else  {
         player1.name = p1Name
         player2.name = p2Name
+        //checks if the player entered a secret code
         if (p1Name.toLowerCase() === 'uuddlrlrba' || p2Name.toLowerCase() === 'uuddlrlrba') {
             player1.name = "Easter"
             player2.name = "Egg"
-        } else if(p1Name === 'stupid' || p2Name === 'questions'){
-        questionSet = 'triviaq'
+        } else if(p1Name.toLowerCase() === 'stupid' || p2Name.toLowerCase() === 'questions'){
+        //changes the variable containing the question set used in the AJAX request
+            questionSet = 'triviaq'
         }   
         //update the score-board with the player's name
         $('.player1-name').text(player1.name)
@@ -122,17 +125,16 @@ function bootUp() {
     playBackgroundMusic(audioTracks.questionAudio)
     playSoundEffect(audioTracks.letsPlayAudio)
     
-    //setTimeout(playAudio($backgroundMusic), 1000000000)
 }
-//build handleGetData function to pull in information
+//pulls questions from the API and stores them in the qData object
 function handleGetData() {
-    //build AJAX function to pull in API data
     $.ajax({
         url:  `https://cdn.contentful.com//spaces/a9aj5bcg0qv1/environments/master/entries/?access_token=ySz5GlMWosH6hOorHoM5m1_luBoP3p-QC6w08NpnBAY&select=fields&content_type=${questionSet}`
     }).then(
         function (data) {
             //console.log(data)
             qData = data
+            //set the first question
             setQuestion()
         }
     )
@@ -144,31 +146,36 @@ function handleGetData() {
  * Render
  ****************************/
 
+//loads the new questions when the button is clicked
 $newQBtn.on('click', setQuestion)
 
 
 function setQuestion() {
-    $message.text("")
-    setPlayer()
+    
+    $message.text("")//clears the answer feedback
+    setPlayer()//changes to the next player
+
+    //update the question header with the question number and player name.
     $qHeader.text(`Question #${currentQ}: ${currentPlayer.name} you're up!`)
-    console.log('`${currentQ / 20 * 100}%;`:', `${currentQ / 20 * 100}%;`)
-    $progress
+    
+    $progress //Update the progress bar.
         .text(`${currentQ}/20`)
         .attr('aria-valuenow', currentQ)
         .width(`${currentQ / 20 * 100}%`)
-    currentQ++
-    playerCounter++
-    questionGetter()
+    currentQ++ //update the question number
+    playerCounter++ //update the player counter (odds are p1 evens are p2)
+    questionGetter() //pulls in a random question from qData
+
+    //re-enables the answer buttons and resets their styling
     $(".ans").prop("disabled", false).removeClass().addClass('btn btn-info ans');
-    console.log('qID:', qID)
-    console.log('qIDArr.length:', qIDArr.length)
-    render(qID)
-    console.log(qIDArr.length)
-    if (qIDArr.length) {
+
+    render(qID) //assigns the questions & answers to the relevant html elements
+
+    if (qIDArr.length) {   //if there are more questions, disable the new question button
         $newQBtn.prop('disabled', true)
     } 
 }
-//render function ***HOISTED
+
 function render(num) {
     $question.text(qData.items[num].fields.question)
     $ansA.text(qData.items[num].fields.a)
@@ -182,9 +189,13 @@ function render(num) {
  *  Answer Event Listener
  *  Check Answer Function
  ************************************/
+
+//When the player clicks an answer:
+//run the check answer function and disable the buttons
 $('.answers').on('click', processAnswer)
 function processAnswer(event) {
-    console.log(event.target)
+
+    //if the player clicks the answer div but not a specific answer don't do anything
     if (event.target.className === 'answers') {
 
     } else {
@@ -197,19 +208,21 @@ function processAnswer(event) {
 function checkAnswer() {
     console.log(playerAnswer)
     if (playerAnswer.id === answer || answer === 'answer-any') {
-        plus1();
-        $message.text('You got it, wow!').css('color', 'black')
-        playerAnswer.setAttribute('class', 'btn btn-success ans')
+        plus1() //adds 1 to the current player's score
+        $message.text('You got it, wow!').css('color', 'black') //give text answer feedback
+        playerAnswer.setAttribute('class', 'btn btn-success ans') //change the button to green
         playSoundEffect(audioTracks.correctAudio)
     } else {
-        $message.text('No, sorry that is way off!').css('color', 'red')
-        playerAnswer.setAttribute('class', 'btn btn-danger ans')
+        $message.text('No, sorry that is way off!').css('color', 'red') //give text answer feedback
+        playerAnswer.setAttribute('class', 'btn btn-danger ans') //change the button color to red
+
+        //play a random sound effect from the wrong answer sound library
         playSoundEffect(audioTracks.wrongAnswer[Math.floor(Math.random()*audioTracks.wrongAnswer.length)])
     }
     if (qIDArr.length) {
-        $newQBtn.prop('disabled', false)
+        $newQBtn.prop('disabled', false) //re-enable the new question button
     } else {
-        $newQBtn
+        $newQBtn  //if the game is over change the button to indicate it
             .text('The game is over!')
             .removeClass('btn-primary start')
             .addClass('btn-danger')
@@ -219,15 +232,15 @@ function checkAnswer() {
 
 
 
-
+//picks a random question from the qData object and removes it from the object
 function questionGetter() {
     //gets random question to pass into render function and 
     //removes it from the question array
     qID = qIDArr.splice(Math.floor(Math.random() * qIDArr.length), 1)
-    //solving a bug where qID would = 20 about once per game... not sure why
+
 }
 
-//determine's the current player
+//determine's the current player (odds are player 1 and evens are player 2)
 function setPlayer() {
     if (playerCounter % 2) {
         currentPlayer = player1
@@ -236,12 +249,13 @@ function setPlayer() {
     }
 }
 
+//add one to the current player's score
 function plus1() {
     if (currentPlayer === player1) {
-        console.log('player1')
+        //pops up a red plus one to show the player's score increased
         $('.p1Plus').fadeTo(200, 1).delay(200).fadeTo(200, 0)
     } else {
-        console.log('player2')
+        //pops up a red plus one to show the player's score increased
         $('.p2Plus').fadeTo(200, 1).delay(200).fadeTo(200, 0)
     }
     currentPlayer.score++
