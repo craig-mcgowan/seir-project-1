@@ -14,6 +14,8 @@ AJAX
 
 Bootstrap
 
+Google Fonts
+
 **Wireframe:**
 
 ![Screenshot from 2021-09-07 20-00-45](https://user-images.githubusercontent.com/87156044/132424902-2033ebf1-dee2-467b-9432-f91d766914cb.png)
