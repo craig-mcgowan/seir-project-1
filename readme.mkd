@@ -4,6 +4,10 @@
 
 **Technologies used:**
 
+Contentful
+
+Vercel
+
 HTML
 
 CSS
