@@ -3,11 +3,21 @@
 **Link to the deployed game here:** <https://seir-project-1-trivia-game-craig-mcgowan.vercel.app/>
 
 **Technologies used:**
+
 HTML
+
 CSS
+
 JavaScript
+
 AJAX
+
 Bootstrap
+
+**Wireframe:**
+
+![Screenshot from 2021-09-07 20-00-45](https://user-images.githubusercontent.com/87156044/132424902-2033ebf1-dee2-467b-9432-f91d766914cb.png)
+
 
 This trivia game is intended to be a fun way to practice building and deploying
 an interactive website and using an AJAX request to connect to an API.
